@@ -11,8 +11,10 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p /mosquitto/config /mosquitto/data /mosquitto/log
 
-# Copy JWT plugin (ensure it's compiled for Debian)
-COPY custom_jwt_auth_plugin.so /usr/lib/custom_jwt_auth_plugin.so
+# Copy JWT plugin (compiled for Debian)
+COPY custom_jwt_auth_plugin.so /usr/lib/
+RUN chmod 755 /usr/lib/custom_jwt_auth_plugin.so && \
+    chown mosquitto:mosquitto /usr/lib/custom_jwt_auth_plugin.so
 
 # Copy config and certs
 COPY mosquitto/mosquitto.conf /mosquitto/config/mosquitto.conf
