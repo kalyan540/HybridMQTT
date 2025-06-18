@@ -16,6 +16,11 @@ HOSTNAME=${1:-$DEFAULT_HOSTNAME}
 # Get current machine IP
 MACHINE_IP=$(hostname -I | awk '{print $1}' 2>/dev/null || echo "127.0.0.1")
 
+# Docker-specific IPs for container networking
+DOCKER_NETWORK_IP="172.18.0.0/16"  # Common Docker bridge network
+DOCKER_GATEWAY="172.17.0.1"        # Default Docker gateway
+DOCKER_CONTAINER_IP="172.18.0.2"   # Typical container IP
+
 # Certificate settings
 COUNTRY="IN"
 STATE="Gujarat"
@@ -36,6 +41,7 @@ echo "=== MQTT Docker Certificate Generation ==="
 echo "Hostname: $HOSTNAME"
 echo "Machine IP: $MACHINE_IP"
 echo "Certificate Directory: $CERT_DIR"
+echo "Docker Container IP: $DOCKER_CONTAINER_IP"
 echo "============================================="
 
 # Create certificate directory if it doesn't exist
@@ -69,9 +75,18 @@ subjectAltName = @alt_names
 [alt_names]
 DNS.1 = $HOSTNAME
 DNS.2 = localhost
+DNS.3 = mosquitto-jwt
+DNS.4 = *.local
 IP.1 = 127.0.0.1
 IP.2 = ::1
 IP.3 = $MACHINE_IP
+IP.4 = 172.17.0.1
+IP.5 = 172.18.0.1
+IP.6 = 172.18.0.2
+IP.7 = 172.19.0.1
+IP.8 = 172.20.0.1
+IP.9 = 192.168.196.44
+IP.10 = 141.148.202.151
 EOF
 
 echo "Step 6: Signing server certificate with CA..."
