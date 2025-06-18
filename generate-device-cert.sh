@@ -21,11 +21,11 @@ CERT_DIR="./certs"
 DEVICE_CERT_DIR="$CERT_DIR/devices"
 
 # Certificate settings
-COUNTRY="US"
-STATE="State"
-CITY="City"
-ORGANIZATION="MQTT Organization"
-ORG_UNIT="IoT Devices"
+COUNTRY="IN"
+STATE="Gujarat"
+CITY="Ahmedabad"
+ORGANIZATION="Prahari Technologies"
+ORG_UNIT="Prahari Technologies"
 DEVICE_COMMON_NAME="$DEVICE_NAME"
 
 # Certificate validity (in days)
